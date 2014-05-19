@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div class="container">
+
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <h1>D3 - Neo4j</h1>
+        <p class="lead">A demos app using Neo4j to display recipe data using d3.js</p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-lg-4 col-md-4">
+          <h2 style="color:#7e9560;">Ingredients</h2>
+          <h6>(Small light green nodes)</h6>
+          <p><strong>Doubleclick</strong> - Filters data to a selection of recipes that contain that ingredient (and the ingredients of those recipes). If there are more than 10 that match, a random selection of 10 recipes is returned.</p>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <h2 style="color:#2c442e;">Recipes</h2>
+          <h6>(Larger dark green nodes)</h6>
+          <p><strong>Click</strong> - Click and drag to fix the recipe nodes in position.</p>
+          <p><strong>Doubleclick</strong> - Doubleclick to release a fixed recipe node.</p>
+       </div>
+        <div class="col-lg-4 col-md-4">
+          <h2 style="color:#611400;">Selected</h2>
+          <h6>(Dark red node)</h6>
+          <p>The dark red node is the current ingredient node that the graph is centered around. That ingredient appears in all the recipes in the current graph.</p>
+        </div>
+      </div>
+      <div id="svg-container"></div>
+      <!-- Site footer -->
+      <div class="footer">
+        <p>&copy; Delimited 2013</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <script src="lib/d3.js"></script>
+    <script src="lib/underscore.js"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

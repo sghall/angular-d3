@@ -1,0 +1,4 @@
+node_modules/
+client/lib
+.DS_Store
+scripts/

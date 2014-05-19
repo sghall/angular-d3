@@ -1,0 +1,43 @@
+body {
+  background: #e7e7de;
+}
+
+#svg-container {
+  border: 3px solid #251d0d;
+  border-radius: 8px;
+}
+
+circle {
+  stroke: lightgrey;
+  stroke-width: 2px;
+}
+
+.recipe {
+  fill: #2c442e;
+}
+.recipe:hover {
+  fill: #d3a86c;
+}
+
+.ingredient {
+  fill: #7e9560;
+}
+.ingredient:hover {
+  fill: #d3a86c;
+}
+.link {
+  pointer-events: none;
+  stroke: #966e35;
+  stroke-opacity: .4;
+}
+
+.selected circle {
+  stroke: #966e35;
+  stroke-width: 3px;
+  fill: #611400; 
+}
+
+.fixed circle{
+  stroke: tomato;
+  stroke-width: 3px;
+}
