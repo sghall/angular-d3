@@ -1,0 +1,23 @@
+{
+  "name": "angular-d3",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sghall/angular-d3",
+  "authors": [
+    "shall <hall.steven.g@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "~3.4.8",
+    "underscore": "~1.6.0",
+    "angular": "~1.2.16"
+  }
+}

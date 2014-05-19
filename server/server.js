@@ -1,7 +1,7 @@
 var express = require('express'),
     path = require('path'),
     http = require('http'),
-    data = require('./server/routes');
+    data = require('./routes/routes.js');
 
 var app = express();
 
@@ -10,10 +10,11 @@ app.configure(function () {
     app.use(express.compress());
     app.use(express.logger('tiny'));  /* 'default', 'short', 'tiny', 'dev' */
     app.use(express.bodyParser()),
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, 'client')));
 });
 
-app.get('/ing/:nodeid', data.getIngredientJSON);
+app.get('/episodes/:season', data.getSeasonEpisodes);
+app.get('/characters/:episode', data.getEpisodeCharacters);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
