@@ -10,7 +10,7 @@ app.configure(function () {
     app.use(express.compress());
     app.use(express.logger('tiny'));  /* 'default', 'short', 'tiny', 'dev' */
     app.use(express.bodyParser()),
-    app.use(express.static(path.join(__dirname, 'client')));
+    app.use(express.static(path.join(__dirname, '../client')));
 });
 
 app.get('/episodes/:season', data.getSeasonEpisodes);
