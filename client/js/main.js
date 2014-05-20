@@ -22,8 +22,7 @@ myApp.controller('MainCtrl', function($scope, $http){
   };
 
   $scope.updateEpisode = function () {
-    console.log("episode", this.ep[0]);
-    $scope.plot = this.ep[0].data.plot;
+    $scope.plot = '<strong>PLOT: </strong>' + this.ep[0].data.plot;
     $scope.title = this.ep[0].data.title;
     $scope.snumber = this.ep[0].data.season;
     $scope.enumber = this.ep[0].data.sequence;
@@ -56,10 +55,10 @@ myApp.controller('MainCtrl', function($scope, $http){
 
 });
 
-myApp.directive('forceChart', function(){
+myApp.directive('forceChart', ['$http', function($http){
   function link(scope, el, attr){
 
-    var width = 700, height = 400;
+    var width = 700, height = 375;
 
     var svg = d3.select(el[0]).append("svg")
     svg.attr({id: 'graph-svg', width: width, height: height});
@@ -88,6 +87,28 @@ myApp.directive('forceChart', function(){
       return {nodes: _.toArray(nodes), links: links};
     };
 
+    var onCharClick = function (d) {
+      if (d.labels[0] === "Character") {
+        d3.select('#character').text(d.properties.description)
+        d3.select('#character-name').text(d.properties.name)
+        $http.get('/char/episodes/' + d.id).success(function(data){
+
+          var s = {};
+          d3.range(1, 26).forEach(function (d) {
+            s['Season ' + d] = {num: d, count: 0};
+          });
+
+          data.forEach(function (d) {
+            s['Season ' + d[0]].count += 1;
+          });
+
+          scope.charData = _.toArray(s);
+        }).error(function(err){
+          throw err;
+        });
+      }
+    };
+
     var dragstart = function (d) {
       if (d.properties.label === "Recipe"){
         d3.select(this).classed("fixed", d.fixed = true);
@@ -104,6 +125,8 @@ myApp.directive('forceChart', function(){
     };
 
     var updateNodes = function (curid, force) {
+      d3.selectAll("text").remove();
+
       node = node.data(force.nodes(), function(d) { return d.id;});
       node.enter().append("g")
         .attr("class", "node")
@@ -112,6 +135,7 @@ myApp.directive('forceChart', function(){
       node.append("circle")
         .attr("class", function (d) { return d.properties.label === "Episode" ? "episode": "character"; })
         .attr("r", function (d) { return d.properties.label === "Episode" ? 15: 10; })
+        .on("click", onCharClick)
 
       node.append("text")
         .attr("dx", function (d) { return d.properties.label === "Episode" ? 15: 12; })
@@ -152,36 +176,75 @@ myApp.directive('forceChart', function(){
     restrict: 'E',
     scope: false
   };
-});
+}]);
 
 
-myApp.directive('pieChart', function(){
+myApp.directive('barChart', function(){
   function link(scope, el, attr){
-    var color = d3.scale.category10();
-    var width = 200;
-    var height = 200;
-    var min = Math.min(width, height);
-    var svg = d3.select(el[0]).append('svg');
-    var pie = d3.layout.pie().sort(null);
-    var arc = d3.svg.arc()
-      .outerRadius(min / 2 * 0.9)
-      .innerRadius(min / 2 * 0.5);
+    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+        width = 1000 - margin.left - margin.right,
+        height = 200 - margin.top - margin.bottom;
 
-    svg.attr({width: width, height: height});
-    var g = svg.append('g')
-      // center the donut chart
-      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-    
-    // add the <path>s for each arc slice
-    var arcs = g.selectAll('path');
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
 
-    scope.$watch('seasons', function(data){
-      arcs = arcs.data(pie(data));
-      arcs.enter().append('path')
-        .style('stroke', 'white')
-        .attr('fill', function(d, i){ return color(i) });
-      arcs.exit().remove();
-      arcs.attr('d', arc);
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(25)
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    var svg = d3.select(el[0]).append("svg")
+        .attr("width",  width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+    var bars = svg.selectAll(".bar")
+      
+    scope.$watch('charData', function(data){
+      if (data) {
+        data.sort(function (a,b) { return a.num - b.num; })
+        x.domain(data.map(function(d) { return d.num; }));
+        y.domain([0, 20]);
+
+        d3.selectAll(".axis").remove();
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + (height) + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+          .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Appearances");
+
+        bars = bars.data(data, function (d) { return d.num });
+        bars.enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) { return x(d.num); })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.count); })
+          .attr("height", function(d) { return height - y(d.count); });
+
+        bars.transition().duration(1000)
+          .attr("y", function(d) { return y(d.count); })
+          .attr("height", function(d) { return height - y(d.count); });
+      }
     }, true);
   }
   return {

@@ -13,6 +13,18 @@ exports.getSeasonEpisodes = function (req, res) {
   });
 };
 
+exports.getCharEpisodes = function (req, res) {
+  options = getOptions(req.param("nodeid"), 'GET_CHAR_EPISODES');
+  request.post(options, function (err, response, body) {
+    if (err) throw err;
+    if (body.data != undefined && response.statusCode === 200) {
+      res.send(body.data);
+    } else {
+      throw new Error('GET_CHAR_EPISODES: '+ response.body.message);
+    }
+  });
+};
+
 exports.getEpisodeCast = function (req, res) {
   queryEpisodeRelations(req.param("nodeid"), function (err, response){
     if (err) throw err;
@@ -58,7 +70,7 @@ function getOptions(d, type) {
       options.body = {query: query, params: {} };
       break;
     case 'GET_CHAR_EPISODES':
-      query = "START a = node(" + d + ") MATCH (a)-[r]->(b) RETURN (b)";
+      query = "START a = node(" + d + ") MATCH (a)-[r]->(b) RETURN b.season";
       options.url = dataURL + "cypher"
       options.body = {query: query,  params: {}};
       break;

@@ -15,6 +15,7 @@ app.configure(function () {
 
 app.get('/episodes/:season', data.getSeasonEpisodes);
 app.get('/characters/:nodeid', data.getEpisodeCast);
+app.get('/char/episodes/:nodeid', data.getCharEpisodes);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));

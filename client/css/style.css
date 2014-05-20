@@ -10,12 +10,21 @@ body {
   font-size: 11px;
 }
 
+#character {
+  margin-left: 1px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px 5px 5px 5px;
+  height: 100px;
+  overflow: scroll;
+}
+
 .plot-div {
   margin-left: 1px;
   border: 1px solid grey;
   border-radius: 5px;
   padding: 5px 5px 5px 5px;
-  max-height: 200px;
+  height: 100px;
   overflow: scroll;
 }
 
@@ -25,7 +34,7 @@ body {
   border: 1px solid black;
   border-radius: 5px;
   padding: 5px 5px 5px 5px;
-  max-height: 450px;
+  max-height: 500px;
   overflow: scroll;
 }
 
@@ -70,6 +79,11 @@ circle {
 .character {
   fill: #6E7B8B;
 }
+
+.character.active {
+  fill: tomato;
+}
+
 .character:hover {
   opacity: .6;
 }
@@ -89,3 +103,23 @@ circle {
   stroke: tomato;
   stroke-width: 3px;
 }
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  opacity: .6;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+

@@ -50,8 +50,15 @@
         <div class="row plot-div">
           <p ng-bind-html="plot"></p>
         </div>
-        <force-chart></force-chart>
+        <div class="row">
+          <force-chart></force-chart>
+        </div>
       </div>
+    </div>
+    <div class="row">
+      <bar-chart></bar-chart>
+      <h4 id="character-name"></h4>
+      <p id="character"></p>
     </div>
 
     <script src="js/TweenMax.min.js"></script>
