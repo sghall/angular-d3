@@ -46,6 +46,5 @@
   },
   "_source": "git://github.com/Hendrixer/ng-Fx.git",
   "_target": "~0.4.0",
-  "_originalSource": "ng-Fx",
-  "_direct": true
+  "_originalSource": "ng-Fx"
 }

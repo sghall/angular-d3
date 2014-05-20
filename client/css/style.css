@@ -10,6 +10,15 @@ body {
   font-size: 11px;
 }
 
+.plot-div {
+  margin-left: 1px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px 5px 5px 5px;
+  max-height: 200px;
+  overflow: scroll;
+}
+
 .ep-list {
   margin-top: 15px;
   background: #8E8E8E; 
@@ -51,18 +60,18 @@ circle {
   stroke-width: 2px;
 }
 
-.recipe {
-  fill: #2c442e;
+.episode {
+  fill: #104E8B;
 }
-.recipe:hover {
-  fill: #d3a86c;
+.episode:hover {
+  opacity: .6;
 }
 
-.ingredient {
-  fill: #7e9560;
+.character {
+  fill: #6E7B8B;
 }
-.ingredient:hover {
-  fill: #d3a86c;
+.character:hover {
+  opacity: .6;
 }
 .link {
   pointer-events: none;
