@@ -4,7 +4,7 @@ var dataURL = 'http://localhost:7474/db/data/';
 exports.getSeasonEpisodes = function (req, res) {
   options = getOptions(req.param("season"), 'GET_EPISODES');
   request.post(options, function (err, response, body) {
-    if (err) return callback(err);
+    if (err) throw err;
     if (body.data != undefined && response.statusCode === 200) {
       res.send(body.data);
     } else {
@@ -16,7 +16,7 @@ exports.getSeasonEpisodes = function (req, res) {
 exports.getEpisodeCharacters = function (req, res) {
   options = getOptions(req.param("episode"), 'GET_CHARACTERS');
   request.post(options, function (err, response, body) {
-    if (err) return callback(err);
+    if (err) throw err;
     if (body.data != undefined && response.statusCode === 200) {
       res.send(body.data);
     } else {
