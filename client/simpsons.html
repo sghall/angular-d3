@@ -4,46 +4,47 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
-  <body>
-    <div class="container">
-
-      <!-- Jumbotron -->
-      <div class="jumbotron">
-        <h1>Angular - D3 - Neo4j</h1>
-        <p class="lead">A demos app</p>
+  <body ng-app="myApp" ng-controller="MainCtrl">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+        <h1>Simpsons Episode Browser</h1>
+        <p class="lead">A demo app using AngularJS, D3, and Neo4j</p>
       </div>
-
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-lg-4 col-md-4">
-          <h2 style="color:#7e9560;">Ingredients</h2>
-          <h6>(Small light green nodes)</h6>
-          <p><strong>Doubleclick</strong> - Filters data to a selection of recipes that contain that ingredient (and the ingredients of those recipes). If there are more than 10 that match, a random selection of 10 recipes is returned.</p>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <h2 style="color:#2c442e;">Recipes</h2>
-          <h6>(Larger dark green nodes)</h6>
-          <p><strong>Click</strong> - Click and drag to fix the recipe nodes in position.</p>
-          <p><strong>Doubleclick</strong> - Doubleclick to release a fixed recipe node.</p>
-       </div>
-        <div class="col-lg-4 col-md-4">
-          <h2 style="color:#611400;">Selected</h2>
-          <h6>(Dark red node)</h6>
-          <p>The dark red node is the current ingredient node that the graph is centered around. That ingredient appears in all the recipes in the current graph.</p>
-        </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-6">
+        <img src="img/simpsons.jpg" class="img-responsive img-rounded">
       </div>
-      <div id="svg-container"></div>
-      <!-- Site footer -->
-      <div class="footer">
-        <p>&copy; Delimited 2013</p>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <h2>Choose a Season:</h2>
       </div>
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <h2 class="pull-right">Season {{ season }}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="btn-group btn-group-justified" id="season-btn-group">
+        <a data-ng-repeat="s in seasons" ng-click="updateSeason()" class="btn btn-default year-group">{{ s }}</a>
+      </div>
+    </div>
 
-    </div> <!-- /container -->
+    <div class="row">
+      <div class="ep-list col-xs-4 col-sm-4 col-md-3 col-lg-3">
+        <button class="ep-list-item fx-zoom-down fx-easing-cubic fx-speed-800" data-ng-repeat="ep in episodes">
+          <h5>{{ep[0].data.title}}</h5>
+          <h4>Season: {{ep[0].data.season}} Episode: {{ep[0].data.sequence}}</h4>
+          <h6>Air Date: {{ dateFormat(ep[0].data.air_date) }}</h6>
+        </button>
+      </div>
+    </div>
 
+    <script src="js/TweenMax.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/ng-fx/dist/ng-fx.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="js/init.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

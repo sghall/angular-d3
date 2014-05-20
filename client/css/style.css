@@ -1,6 +1,45 @@
 body {
-  background: #e7e7de;
+  background: #FAFAFA;
+  margin: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow-x: hidden;
 }
+
+.btn {
+  font-size: 11px;
+}
+
+.ep-list {
+  margin-top: 15px;
+  background: #8E8E8E; 
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 5px 5px 5px;
+  max-height: 450px;
+  overflow: scroll;
+}
+
+.ep-list-item {
+  width: 100%;
+  background-color: white;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.btn-default:hover {
+  background-color: #FFD700;
+}
+
+.ep-list-item:hover {
+  background-color: #FFD700;
+}
+
+#season-btn-group {
+  overflow: scroll;
+}
+
 
 #svg-container {
   border: 3px solid #251d0d;
