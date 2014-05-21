@@ -109,6 +109,22 @@ myApp.directive('forceChart', ['$http', function($http){
       }
     };
 
+    $(document).ready(function() {
+      resize();
+    });
+
+    $(window).on("resize", function() {
+      resize();
+    });
+
+    var resize = function () {
+      var chart = $("#graph-svg");
+      chart.attr("width", chart.parent().width());
+      chart.attr("height", chart.parent().height());
+      force.size([chart.parent().width(), chart.parent().height()]);
+      force.start(); 
+    }
+
     var dragstart = function (d) {
       if (d.properties.label === "Recipe"){
         d3.select(this).classed("fixed", d.fixed = true);
@@ -201,12 +217,25 @@ myApp.directive('barChart', function(){
         .orient("left");
 
     var svg = d3.select(el[0]).append("svg")
+        .attr("id", "bar-svg")
         .attr("width",  width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+        .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    $(document).ready(function() {
+      resize();
+    });
 
+    $(window).on("resize", function() {
+      resize();
+    });
+
+    var resize = function () {
+      var chart = $("#bar-svg");
+      chart.attr("width", chart.parent().width());
+    }
 
     var bars = svg.selectAll(".bar")
       
@@ -254,21 +283,7 @@ myApp.directive('barChart', function(){
   };
 });
 
-// $(document).ready(function() {
-//   resize();
-// });
 
-// $(window).on("resize", function() {
-//   resize();
-// });
-
-// var resize = function () {
-//   var chart = $("#graph-svg");
-//   chart.attr("width", chart.parent().width());
-//   chart.attr("height", chart.parent().height());
-//   this.force.size([chart.parent().width(), chart.parent().height()]);
-//   this.force.start(); 
-// }
 
 
 
